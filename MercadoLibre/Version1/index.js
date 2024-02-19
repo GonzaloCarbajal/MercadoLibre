@@ -60,7 +60,6 @@ router.get('/items/:id',
     validation(validaHeaderSchema, 'headers'),
     async (req, res) => {
         try {
-            console.log("Inicio")
 
             /*let myHeaders = request.headers;*/
 
@@ -75,7 +74,7 @@ router.get('/items/:id',
             //Obtengo parametros
             const id = req.params.id;
 
-            console.log("id: ", id);
+
 
             //Guardo URL para consumir luego
             let urlItem = "https://api.mercadolibre.com/items/" + id;
@@ -96,7 +95,7 @@ router.get('/items/:id',
             await request(optionsItem, function (err, res2, body) {
 
                 const reqJsonItem = JSON.parse(body);
-                console.log("optionsItem, urlItem: ", urlItem);
+
 
                 jsonItem = reqJsonItem;
 
@@ -118,11 +117,11 @@ router.get('/items/:id',
                 const reqJsonItemDesc = JSON.parse(body);
                 jsonItemDesc = reqJsonItemDesc;
 
-                console.log("optionsItemDesc");
+
 
             });
 
-            console.log("jsonItemDesc: ", jsonItemDesc);
+
 
             //Obtengo valor absoulto por si viene negativo
             let amount = Math.abs(jsonItem.price);
@@ -165,7 +164,7 @@ router.get('/items/:id',
             res.send(items);
         } catch (error) {
 
-            res.send("Sin resultados: " + error).status(404);
+            res.send("Sin resultados: " + error).status(204);
         }
     });
 
@@ -260,7 +259,7 @@ router.get('/:site',
             let Token2 = req.headers["x-auth-token2"]; //No hago nada con este token
 
             const site = req.params.site;
-            console.log(site);
+
 
 
             const obj = {
@@ -296,16 +295,11 @@ router.get('/:site',
                 q = ""
             }
 
-            console.log("sort", sort);
-            console.log("offset", offset);
-            console.log("limit", limit);
-            console.log("q", q);
-
             var urlQuery = "sort=" + sort + "&offset=" + offset + "&limit=" + limit + "&q=" + q;
 
             var url = "https://api.mercadolibre.com/sites/" + site + "/search?" + urlQuery;
 
-            console.log("url", url);
+
 
             const options = {
                 url: url,
@@ -319,25 +313,6 @@ router.get('/:site',
 
             request(options, function (err, res2, body) {
                 const json = JSON.parse(body);
-
-                /* const lista = json.map(function callback(elemactual,index) {
-                     console.log("elemactual",elemactual)
-                 })*/
-
-
-                /*const map = new Map(Object.entries(json));*/
-
-
-                /*for (var entry of map.entries()) {
-                    var key = entry[0],
-                        value = entry[1];
-                    console.log(key + " = " + value);
-                }*/
-
-                //console.log("map", map);
-
-
-                /*const recorreArray = (arr) => arr.map(item => item);*/
 
                 const crearResponse = (arr) => arr.map((value, key) => {
 
@@ -353,6 +328,7 @@ router.get('/:site',
 
                     //Obtengo decimal, con 2 digitos
                     var amountDecimal = (amount - Math.floor(value.price)).toFixed(2) * 100;
+
 
 
                     const items = {

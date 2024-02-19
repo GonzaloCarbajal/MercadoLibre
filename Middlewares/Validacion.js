@@ -1,9 +1,9 @@
 const boom = require('@hapi/boom');
 
 function validation(schema, property) {
-    //Retorna middleware (crea middleware de forma dinamica)
+    //Retorna middleware
     return (req, res, next) => {
-        const data = req[property]; //Esto lo saca dinamicamente, digamos si es un post saca la info de body, si es un get de params o query
+        const data = req[property];
         console.log(data)
 
         const { error } = schema.validate(data, { abortEarly: false });

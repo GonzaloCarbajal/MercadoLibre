@@ -14,9 +14,11 @@ app.use(express.json());
 
 
 // Definimos rutas
+/*
 app.get('/', (req, res) => {
     res.send('Hola mi server en express');
 });
+*/
 
 
 routerApi(app);
@@ -24,7 +26,7 @@ routerApi(app);
 // Le debemos decir enq ue puerto va a escuchar nuestra aplicacion
 app.listen(port, () => {
     console.log('Mi port ' +  port);
-    V1swaggerDocs(app, port);
+    V1swaggerDocs(app, port); //Documento con Swagger
 });
 
 
